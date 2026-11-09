@@ -2,6 +2,7 @@
 // bench.js starts this file once for each renderer and measures its memory.
 //   node run.js satori|chromium
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { monitorEventLoopDelay } from 'node:perf_hooks';
 
 const renderer = process.argv[2];
 const folders = { satori: '../nodejs-satori', chromium: '../nodejs-playwright' };
@@ -38,12 +39,17 @@ report({ phase: 'idle' });
 await new Promise((resolve) => setTimeout(resolve, 500));
 
 report({ phase: 'sequential' });
+// How long the event loop of this process is blocked. While it is blocked,
+// a server cannot answer other requests.
+const loopDelay = monitorEventLoopDelay({ resolution: 5 });
+loopDelay.enable();
 const times = [];
 for (let i = 0; i < SEQUENTIAL; i++) {
   started = performance.now();
   await renderCard(CARD);
   times.push(performance.now() - started);
 }
+loopDelay.disable();
 
 report({ phase: 'parallel' });
 started = performance.now();
@@ -61,6 +67,7 @@ report({
   medianMs: Number(percentile(50).toFixed(1)),
   p95Ms: Number(percentile(95).toFixed(1)),
   imagesPerSecond: Number((PARALLEL / parallelSeconds).toFixed(1)),
+  maxLoopDelayMs: Number((loopDelay.max / 1e6).toFixed(1)),
   pngBytes: first.length,
 });
 await closeRenderer();

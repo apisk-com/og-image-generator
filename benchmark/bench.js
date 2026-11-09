@@ -27,6 +27,7 @@ function treeMemory(rootPid) {
       }
     }
   }
+  if (!rows.some(([pid]) => pid === rootPid)) throw new Error(`process ${rootPid} not found`);
   let rssKb = 0;
   let pssKb = 0;
   for (const [pid, , rss] of rows) {
@@ -63,8 +64,9 @@ function runRenderer(renderer) {
         peak.rss = Math.max(peak.rss, memory.rss);
         peak.pss = memory.pss === null || peak.pss === null ? null : Math.max(peak.pss, memory.pss);
         peak.processes = Math.max(peak.processes, memory.processes);
-      } catch {
+      } catch (error) {
         // ps can fail while processes end
+        if (process.env.BENCH_DEBUG) console.error(error.message);
       }
     };
     const timer = setInterval(sample, SAMPLE_MS);
@@ -121,12 +123,13 @@ const rows = [
   ['Render time, median (ms)', (r) => r.medianMs],
   ['Render time, 95th percentile (ms)', (r) => r.p95Ms],
   ['Images per second, 4 at a time', (r) => r.imagesPerSecond],
+  ['Longest event loop block (ms)', (r) => r.maxLoopDelayMs],
   ['PNG size (bytes)', (r) => r.pngBytes],
-  ['Processes', (r) => r.memoryMb.parallel.processes],
-  ['Memory when idle, RSS (MB)', (r) => mb(r.memoryMb.idle.rss)],
-  ['Memory when idle, PSS (MB)', (r) => mb(r.memoryMb.idle.pss)],
-  ['Peak memory, 4 at a time, RSS (MB)', (r) => mb(r.memoryMb.parallel.rss)],
-  ['Peak memory, 4 at a time, PSS (MB)', (r) => mb(r.memoryMb.parallel.pss)],
+  ['Processes', (r) => r.memoryMb.parallel?.processes],
+  ['Memory when idle, RSS (MB)', (r) => mb(r.memoryMb.idle?.rss)],
+  ['Memory when idle, PSS (MB)', (r) => mb(r.memoryMb.idle?.pss)],
+  ['Peak memory, 4 at a time, RSS (MB)', (r) => mb(r.memoryMb.parallel?.rss)],
+  ['Peak memory, 4 at a time, PSS (MB)', (r) => mb(r.memoryMb.parallel?.pss)],
 ];
 for (const [label, value] of rows) {
   console.log(`| ${label} | ${value(results[0])} | ${value(results[1])} |`);
