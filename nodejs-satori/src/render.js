@@ -17,9 +17,10 @@ const fonts = [
 export async function renderCard(input) {
   // satori lays out the elements and returns an SVG string. Text becomes paths.
   const svg = await satori(cardElement(input), { width: WIDTH, height: HEIGHT, fonts });
-  // resvg draws the SVG in a worker thread, so the event loop stays free.
-  // The SVG has no text elements, so resvg needs no fonts.
+  // renderAsync draws the SVG in a worker thread. The SVG has no text
+  // elements, so resvg needs no fonts.
   const image = await renderAsync(svg, { font: { loadSystemFonts: false } });
+  // asPng() encodes the PNG on the main thread.
   return image.asPng();
 }
 

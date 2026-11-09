@@ -11,6 +11,7 @@ node steps.js
 
 # Both renderers must give a 1200 x 630 PNG.
 file out/satori.png out/chromium.png
+sha256sum out/satori.png out/chromium.png
 file out/satori.png | grep -q 'PNG image data, 1200 x 630'
 file out/chromium.png | grep -q 'PNG image data, 1200 x 630'
 echo "Benchmark finished."

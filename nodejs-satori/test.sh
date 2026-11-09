@@ -6,6 +6,16 @@ cd "$(dirname "$0")"
 npm ci
 npm test
 
+# The tutorial downloads the fonts from the Inter release. They must be the files in fonts/.
+fonts_check=$(mktemp -d)
+(cd "$fonts_check" && curl -fsSLO https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip \
+  && unzip -j -q Inter-4.1.zip extras/ttf/Inter-Regular.ttf extras/ttf/Inter-Bold.ttf LICENSE.txt -d fonts)
+for f in Inter-Regular.ttf Inter-Bold.ttf LICENSE.txt; do
+  cmp "$fonts_check/fonts/$f" "fonts/$f"
+done
+rm -rf "$fonts_check"
+echo "The fonts match the Inter 4.1 release."
+
 # Start the service as the README says, and send the example request.
 port=${PORT:-3000}
 out=$(mktemp -d)
