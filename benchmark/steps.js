@@ -81,7 +81,7 @@ const chromiumSteps = await medians(async () => {
     await page.goto(`${ORIGIN}/card.html`);
     await page.evaluate(() => document.fonts.ready);
   });
-  const [, shot] = await timed(() => page.screenshot({ type: 'png' }));
+  const [, shot] = await timed(() => page.screenshot({ type: 'png', animations: 'disabled' }));
   const [, close] = await timed(() => context.close());
   return {
     'new context, route, new page': open,
@@ -97,9 +97,9 @@ await page.goto(`${ORIGIN}/card.html`);
 await page.evaluate(() => document.fonts.ready);
 const types = {};
 for (const [label, options] of [
-  ['PNG', { type: 'png' }],
-  ['JPEG, quality 90', { type: 'jpeg', quality: 90 }],
-  ['WebP, quality 90', { type: 'webp', quality: 90 }],
+  ['PNG', { type: 'png', animations: 'disabled' }],
+  ['JPEG, quality 90', { type: 'jpeg', quality: 90, animations: 'disabled' }],
+  ['WebP, quality 90', { type: 'webp', quality: 90, animations: 'disabled' }],
 ]) {
   let bytes = 0;
   types[label] = await medians(async () => {

@@ -69,7 +69,8 @@ export async function renderCard(input) {
     // Wait until the web fonts are ready. Without this wait, the image can
     // show a fallback font.
     await page.evaluate(() => document.fonts.ready);
-    return await page.screenshot({ type: 'png' });
+    // Stop CSS animations and transitions, so the same input gives the same image.
+    return await page.screenshot({ type: 'png', animations: 'disabled' });
   } finally {
     await context.close().catch(() => {});
   }
