@@ -6,7 +6,20 @@ satori and with headless Chrome. Each folder is one complete example: one langua
 
 ## Examples
 
-The list grows as the tutorials are published.
+### By language and tool
+
+| Folder | Language and tools | What it does | Tutorial |
+|---|---|---|---|
+| [nodejs-satori](nodejs-satori/) | Node.js, satori, resvg-js | OG images from JSX-like objects without a browser, with caching | [Build an OG Image Generator: satori vs Headless Chrome](https://apisk.com/blog/og-image-service/), 19 January 2027 |
+| [nodejs-playwright](nodejs-playwright/) | Node.js, Playwright | OG images from HTML and CSS with headless Chrome | [Build an OG Image Generator: satori vs Headless Chrome](https://apisk.com/blog/og-image-service/), 19 January 2027 |
+
+### By problem
+
+| Folder | Language and tools | What it does | Tutorial |
+|---|---|---|---|
+| [benchmark](benchmark/) | Node.js, satori, Playwright | Render time and memory of both renderers for the same card | [Build an OG Image Generator: satori vs Headless Chrome](https://apisk.com/blog/og-image-service/), 19 January 2027 |
+
+Each folder runs on its own: open its `README.md` for the commands.
 
 ## Add an example
 
