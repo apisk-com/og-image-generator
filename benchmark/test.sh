@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI entry point: installs both renderers and runs the benchmark.
+# Test entry point: installs both renderers and runs the benchmark.
 set -euo pipefail
 cd "$(dirname "$0")"
 

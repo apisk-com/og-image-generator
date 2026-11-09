@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI entry point: the tests, then the commands from the README and the tutorial.
+# Test entry point: the tests, then the commands from the README and the tutorial.
 set -euo pipefail
 cd "$(dirname "$0")"
 

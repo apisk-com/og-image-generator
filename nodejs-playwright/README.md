@@ -93,5 +93,5 @@ npm test
 
 The tests render real cards and check the PNG signature, the size, the cache
 headers, the 304 answer, the HTML escape and the signatures. `test.sh` is the
-CI script: it also starts the service with `npm start` and sends the example
+test script: it also starts the service with `npm start` and sends the example
 request.
