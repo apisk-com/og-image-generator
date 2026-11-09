@@ -8,8 +8,11 @@ npm test
 
 # The tutorial downloads the fonts from the Inter release. They must be the files in fonts/.
 fonts_check=$(mktemp -d)
-(cd "$fonts_check" && curl -fsSLO https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip \
-  && unzip -j -q Inter-4.1.zip extras/ttf/Inter-Regular.ttf extras/ttf/Inter-Bold.ttf LICENSE.txt -d fonts)
+(
+  cd "$fonts_check"
+  curl -LO https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip
+  unzip -j Inter-4.1.zip extras/ttf/Inter-Regular.ttf extras/ttf/Inter-Bold.ttf LICENSE.txt -d fonts
+)
 for f in Inter-Regular.ttf Inter-Bold.ttf LICENSE.txt; do
   cmp "$fonts_check/fonts/$f" "fonts/$f"
 done
