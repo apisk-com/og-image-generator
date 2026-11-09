@@ -1,0 +1,21 @@
+{
+  "name": "og-image-playwright",
+  "version": "1.0.0",
+  "description": "Open Graph image service with HTML, CSS and headless Chromium (Playwright)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "playwright": "1.65.0"
+  },
+  "devDependencies": {
+    "image-size": "2.1.0"
+  }
+}

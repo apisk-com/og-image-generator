@@ -1,0 +1,13 @@
+{
+  "name": "og-image-benchmark",
+  "version": "1.0.0",
+  "description": "Render time and memory of satori and Chromium for the same Open Graph card",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bench": "node bench.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
