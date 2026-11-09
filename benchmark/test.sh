@@ -7,6 +7,7 @@ cd "$(dirname "$0")"
 (cd ../nodejs-playwright && npm ci && npx playwright install --with-deps --only-shell chromium)
 
 node bench.js
+node steps.js
 
 # Both renderers must give a 1200 x 630 PNG.
 file out/satori.png out/chromium.png

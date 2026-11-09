@@ -36,6 +36,16 @@ node bench.js
 ```
 
 It prints the machine, the versions and a Markdown table, and writes
-`out/results.json`, `out/satori.png` and `out/chromium.png`. Timings change
+`out/results.json`, `out/satori.png` and `out/chromium.png`.
+
+To see where the time goes, run:
+
+```bash
+node steps.js
+```
+
+It prints the median time of each step: the satori layout, the resvg drawing
+and the PNG encoding; the Chromium context, the page load, the screenshot and
+the close. It also compares PNG, JPEG and WebP screenshots of the same page. Timings change
 with the machine and its load. Run it on a computer that does no other work,
 and compare only results from the same machine.

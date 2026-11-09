@@ -60,9 +60,10 @@ function runRenderer(renderer) {
     const sample = () => {
       try {
         const memory = treeMemory(child.pid);
-        const peak = (peaks[phase] ??= { rss: 0, pss: 0, processes: 0 });
+        const peak = (peaks[phase] ??= { rss: 0, pss: null, processes: 0 });
         peak.rss = Math.max(peak.rss, memory.rss);
-        peak.pss = memory.pss === null || peak.pss === null ? null : Math.max(peak.pss, memory.pss);
+        // PSS is null when a process ended during the sample, or outside Linux.
+        if (memory.pss !== null) peak.pss = Math.max(peak.pss ?? 0, memory.pss);
         peak.processes = Math.max(peak.processes, memory.processes);
       } catch (error) {
         // ps can fail while processes end
